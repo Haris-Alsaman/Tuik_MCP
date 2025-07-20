@@ -345,7 +345,7 @@ class PaymentMCPServer:
 
 @click.command()
 @click.option('--host', default='0.0.0.0', help='Server host (default: 0.0.0.0)')
-@click.option('--port', default=8060, help='Server port (default: 8060)')
+@click.option('--port', default=8070, help='Server port (default: 8060)')
 @click.option('--transport', envvar='TRANSPORT', default='sse', help='Transport type (default: stdio)')
 @click.option('--auth-token', envvar='AUTH_TOKEN', help='Bearer token for SSE transport.')
 def main(host, port, transport, auth_token):
