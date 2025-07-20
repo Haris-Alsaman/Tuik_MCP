@@ -271,15 +271,21 @@ class PaymentMCPServer:
         @self.mcp.tool()
         async def read_and_convert_files(selected_files_json: str) -> str:
             """
-            Reads selected local Excel files and converts data to JSON format.
+            Reads selected local Excel files and converts data to JSON format with strict token limits.
             
             Args:
                 selected_files_json: JSON string or dict containing the list of selected files and their category.
                 
             Returns:
-                JSON string containing the converted data and analysis.
+                JSON string containing the converted data and analysis (under 150k tokens).
             """
             try:
+                # Token limit settings
+                MAX_TOKENS = 150000
+                MAX_ROWS_PER_FILE = 10
+                MAX_COLUMNS_PER_FILE = 15
+                MAX_FILES_TO_PROCESS = 3
+                
                 # Get the script directory for file operations
                 script_dir = os.path.dirname(os.path.abspath(__file__))
                 
@@ -291,7 +297,7 @@ class PaymentMCPServer:
                 else:
                     return json.dumps({
                         "error": f"Invalid input type: {type(selected_files_json)}. Expected dict or JSON string.",
-                        "data": {}
+                        "data_summary": {}
                     }, ensure_ascii=False, indent=2)
                 
                 selected_files = selected_data.get("selected_files", [])
@@ -300,21 +306,29 @@ class PaymentMCPServer:
                 if not selected_files or not kategori_path:
                     return json.dumps({
                         "error": "No files or category path selected for processing",
-                        "data": {},
+                        "data_summary": {},
                         "input_data": selected_data,
                         "note": "Expected 'selected_files' and either 'category_path' or 'selected_category' fields"
                     }, ensure_ascii=False, indent=2)
                 
-                processed_data = {}
+                # Limit number of files to process to prevent token overflow
+                files_to_process = selected_files[:MAX_FILES_TO_PROCESS]
+                
+                processed_summaries = {}
                 successful_reads = 0
                 failed_reads = []
+                total_original_rows = 0
                 
-                for file_name in selected_files:
+                def estimate_tokens(text):
+                    """Rough token estimation: ~4 characters per token"""
+                    return len(str(text)) // 4
+                
+                for file_name in files_to_process:
                     try:
                         file_path = os.path.join(script_dir, 'data', kategori_path, file_name)
                         
                         if os.path.exists(file_path):
-                            # Convert Excel to JSON
+                            # Convert Excel to JSON with strict limits
                             if file_path.endswith(('.xlsx', '.xls')):
                                 try:
                                     if file_path.endswith('.xlsx'):
@@ -322,24 +336,91 @@ class PaymentMCPServer:
                                     else:
                                         df = pd.read_excel(file_path, engine='xlrd')
                                     
-                                    json_data = df.to_dict('records')
+                                    # Store original dimensions
+                                    original_rows, original_cols = df.shape
+                                    total_original_rows += original_rows
                                     
-                                    metadata = {
-                                        "rows": len(df),
-                                        "columns": len(df.columns),
-                                        "column_names": df.columns.tolist(),
-                                        "file_path": file_path,
-                                        "file_size_bytes": os.path.getsize(file_path),
-                                        "file_extension": os.path.splitext(file_path)[1]
+                                    # Limit columns and clean column names
+                                    df = df.iloc[:, :MAX_COLUMNS_PER_FILE]
+                                    df.columns = [str(col)[:50] for col in df.columns]  # Limit column name length
+                                    
+                                    # Sample data intelligently
+                                    if len(df) > MAX_ROWS_PER_FILE:
+                                        # Take first few rows, some middle rows, and last few rows
+                                        sample_indices = (
+                                            list(range(min(3, len(df)))) +  # First 3 rows
+                                            list(range(len(df)//2, len(df)//2 + min(4, len(df)//2))) +  # Middle 4 rows
+                                            list(range(max(0, len(df) - 3), len(df)))  # Last 3 rows
+                                        )
+                                        sample_indices = sorted(list(set(sample_indices)))[:MAX_ROWS_PER_FILE]
+                                        sampled_df = df.iloc[sample_indices]
+                                    else:
+                                        sampled_df = df
+                                    
+                                    # Convert to dict and clean data
+                                    sample_data = []
+                                    for _, row in sampled_df.iterrows():
+                                        clean_row = {}
+                                        for col, val in row.items():
+                                            # Clean and limit string values
+                                            if isinstance(val, str):
+                                                clean_row[str(col)] = val[:100]  # Limit string length
+                                            elif pd.isna(val):
+                                                clean_row[str(col)] = None
+                                            else:
+                                                clean_row[str(col)] = val
+                                        sample_data.append(clean_row)
+                                    
+                                    # Create comprehensive but concise metadata
+                                    column_info = []
+                                    for col in df.columns[:10]:  # Analyze first 10 columns only
+                                        col_data = df[col].dropna()
+                                        if len(col_data) > 0:
+                                            col_info = {
+                                                "name": str(col)[:50],
+                                                "type": str(col_data.dtype),
+                                                "non_null_count": len(col_data),
+                                                "sample_values": [str(val)[:30] for val in col_data.head(3).tolist()]
+                                            }
+                                            
+                                            # Add basic stats for numeric columns
+                                            if col_data.dtype in ['int64', 'float64']:
+                                                try:
+                                                    col_info.update({
+                                                        "min": float(col_data.min()),
+                                                        "max": float(col_data.max()),
+                                                        "mean": float(col_data.mean())
+                                                    })
+                                                except:
+                                                    pass
+                                            
+                                            column_info.append(col_info)
+                                    
+                                    file_summary = {
+                                        "sample_data": sample_data,
+                                        "metadata": {
+                                            "original_dimensions": {
+                                                "rows": original_rows,
+                                                "columns": original_cols
+                                            },
+                                            "sampled_dimensions": {
+                                                "rows": len(sample_data),
+                                                "columns": len(sampled_df.columns)
+                                            },
+                                            "sampling_note": f"Showing {len(sample_data)} sampled rows out of {original_rows} total rows",
+                                            "file_info": {
+                                                "name": file_name,
+                                                "path": file_path,
+                                                "size_bytes": os.path.getsize(file_path),
+                                                "extension": os.path.splitext(file_path)[1]
+                                            },
+                                            "column_analysis": column_info
+                                        }
                                     }
                                     
-                                    processed_data[file_name] = {
-                                        "data": json_data,
-                                        "metadata": metadata
-                                    }
-                                    
+                                    processed_summaries[file_name] = file_summary
                                     successful_reads += 1
-                                    self.logger.info(f"Successfully processed: {file_name}")
+                                    self.logger.info(f"Successfully processed: {file_name} ({original_rows} rows -> {len(sample_data)} sampled)")
                                     
                                 except Exception as excel_error:
                                     failed_reads.append({
@@ -366,40 +447,70 @@ class PaymentMCPServer:
                             "error": f"File processing error: {str(process_error)}"
                         })
                 
-                summary = {
+                # Create final response with token monitoring
+                result = {
                     "processing_summary": {
                         "total_requested": len(selected_files),
+                        "processed": len(files_to_process),
                         "successful_reads": successful_reads,
                         "failed_reads": len(failed_reads),
-                        "success_rate": f"{(successful_reads/len(selected_files)*100):.1f}%" if selected_files else "0%"
+                        "success_rate": f"{(successful_reads/len(files_to_process)*100):.1f}%" if files_to_process else "0%",
+                        "total_original_rows": total_original_rows,
+                        "files_skipped": len(selected_files) - len(files_to_process),
+                        "token_limits": {
+                            "max_tokens": MAX_TOKENS,
+                            "max_rows_per_file": MAX_ROWS_PER_FILE,
+                            "max_columns_per_file": MAX_COLUMNS_PER_FILE,
+                            "max_files_processed": MAX_FILES_TO_PROCESS
+                        }
                     },
-                    "data": processed_data,
-                    "failed_files": failed_reads,
-                    "category_path": kategori_path,
+                    "data_analysis": processed_summaries,
+                    "failed_files": failed_reads if failed_reads else None,
+                    "category_info": {
+                        "category_path": kategori_path,
+                        "category_name": selected_data.get("category_name", "Unknown")
+                    },
+                    "llm_instruction": f"""
+                    Data successfully processed from {successful_reads} Turkish statistics files.
+                    Each file shows sampled data (max {MAX_ROWS_PER_FILE} rows) from the original datasets.
+                    Please analyze this data and provide insights that answer the user's original question.
+                    Focus on key trends, patterns, and relevant statistics from the available samples.
+                    Note: Data is sampled for token efficiency - full datasets contain {total_original_rows} total rows.
+                    """
                 }
                 
-                if successful_reads > 0:
-                    data_summary = {}
-                    for file_name, file_data in processed_data.items():
-                        data_summary[file_name] = {
-                            "sample_data": file_data["data"][:5],
-                            "metadata": file_data["metadata"]
-                        }
-                    
-                    summary["data_summary_for_llm"] = data_summary
-                    summary["llm_instruction"] = """
-                    The above data has been successfully processed from local files.
-                    Please analyze this data and provide insights that answer the user's original question.
-                    Focus on key trends, patterns, and relevant statistics.
-                    """
+                # Final token check and cleanup if needed
+                response_text = json.dumps(result, ensure_ascii=False, indent=2, default=str)
+                estimated_tokens = estimate_tokens(response_text)
                 
-                return json.dumps(summary, ensure_ascii=False, indent=2, default=str)
+                if estimated_tokens > MAX_TOKENS:
+                    # Emergency cleanup: remove detailed column analysis
+                    for file_name in result["data_analysis"]:
+                        if "metadata" in result["data_analysis"][file_name]:
+                            result["data_analysis"][file_name]["metadata"]["column_analysis"] = "Removed to reduce token count"
+                    
+                    response_text = json.dumps(result, ensure_ascii=False, indent=2, default=str)
+                    estimated_tokens = estimate_tokens(response_text)
+                    
+                    result["token_info"] = {
+                        "estimated_tokens": estimated_tokens,
+                        "limit": MAX_TOKENS,
+                        "cleanup_performed": True
+                    }
+                else:
+                    result["token_info"] = {
+                        "estimated_tokens": estimated_tokens,
+                        "limit": MAX_TOKENS,
+                        "cleanup_performed": False
+                    }
+                
+                return json.dumps(result, ensure_ascii=False, indent=2, default=str)
                 
             except Exception as e:
                 error_result = {
                     "error": f"Failed to read and convert files: {str(e)}",
-                    "data": {},
-                    "input_data": str(selected_files_json),
+                    "data_analysis": {},
+                    "input_data": str(selected_files_json)[:500] + "..." if len(str(selected_files_json)) > 500 else str(selected_files_json),
                 }
                 return json.dumps(error_result, ensure_ascii=False, indent=2)
 
