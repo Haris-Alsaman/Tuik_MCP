@@ -143,60 +143,119 @@ class PaymentMCPServer:
                 if not all_data:
                     return json.dumps({"error": "No data available from data.json"}, ensure_ascii=False, indent=2)
 
-                all_files_with_category = []
+                # Create category summaries instead of listing all files
+                category_summaries = []
                 for category_data in all_data:
                     kategori_name = category_data.get("name")
                     kategori_path = category_data.get("kategori")
-                    for file_name in category_data.get("files", []):
-                        all_files_with_category.append({
-                            "file_name": file_name,
-                            "category_name": kategori_name,
-                            "category_path": kategori_path
-                        })
+                    files = category_data.get("files", [])
+                    
+                    # Sample a few file names to give context without overwhelming the prompt
+                    sample_files = files[:3] if len(files) > 3 else files
+                    
+                    category_summaries.append({
+                        "category_name": kategori_name,
+                        "category_path": kategori_path,
+                        "total_files": len(files),
+                        "sample_files": sample_files
+                    })
 
-                # Create a comprehensive prompt for LLM to analyze the question and select relevant files
+                # Create a much shorter prompt focusing on categories first
                 llm_prompt = f"""
-                TASK: Analyze the user's question about Turkish statistics and select the most relevant files from a SINGLE category.
+                TASK: Analyze the user's question about Turkish statistics and identify the most relevant CATEGORY.
                 
                 USER QUESTION: {user_question}
                 
-                AVAILABLE FILES (Total: {len(all_files_with_category)}):
-                {json.dumps(all_files_with_category, ensure_ascii=False, indent=2)}
+                AVAILABLE CATEGORIES ({len(category_summaries)} total):
+                {json.dumps(category_summaries, ensure_ascii=False, indent=2)}
                 
                 INSTRUCTIONS:
-                1. Carefully analyze the user's question to understand what specific data they need.
-                2. Select files from ONLY ONE category that best answers the question.
-                3. Prioritize files that directly address the question over general statistics.
+                1. Analyze the user's question to understand what type of data they need.
+                2. Select the ONE most relevant category that best answers the question.
+                3. Consider the category names and sample files to make your decision.
+                
+                CATEGORY MAPPING:
+                - dis_ticaret: Foreign trade, export/import statistics
+                - egitim: Education statistics, literacy, schools
+                - ekonomik_guven: Economic confidence indexes
+                - enflasyon: Inflation, price indexes, cost of living
+                - gelir: Income, household finances, social statistics
+                - istihdam: Employment, labor force, wages
+                - konut: Housing, construction, real estate
+                - nufus: Population, demographics, marriages
+                - saglik: Health statistics, medical data
+                - sanayi: Industry, manufacturing, R&D
+                - ticaret: Banking, finance, trade
                 
                 RESPONSE FORMAT:
-                Return ONLY a valid JSON object with this exact structure:
+                Return ONLY a valid JSON object:
                 {{
-                    "selected_files": ["file1.xls", "file2.xls"],
-                    "category_path": "path_to_category_folder",
+                    "selected_category": "category_path",
                     "category_name": "Full Category Name",
-                    "reasoning": "Detailed explanation of why these specific files from this category were selected.",
-                    "confidence": "high|medium|low",
-                    "coverage": "complete|partial|limited"
+                    "reasoning": "Why this category was selected",
+                    "confidence": "high|medium|low"
                 }}
-                
-                IMPORTANT:
-                - Select between 1-5 files maximum from a single category.
-                - File names must match exactly from the available list.
                 """
                 
-                # Placeholder for LLM response
-                placeholder_category = all_data[0] if all_data else {}
-                selected_files = placeholder_category.get("files", [])[:5]
-
+                # Simple keyword-based category selection as fallback
+                question_lower = user_question.lower()
+                
+                # Category keywords mapping
+                category_keywords = {
+                    "dis_ticaret": ["dış ticaret", "ihracat", "ithalat", "export", "import", "foreign trade"],
+                    "egitim": ["eğitim", "okul", "öğrenci", "education", "school", "student"],
+                    "ekonomik_guven": ["ekonomik güven", "güven endeksi", "economic confidence"],
+                    "enflasyon": ["enflasyon", "fiyat", "inflation", "price", "cost"],
+                    "gelir": ["gelir", "maaş", "ücret", "income", "salary", "wage"],
+                    "istihdam": ["istihdam", "işsizlik", "çalışan", "employment", "unemployment", "worker"],
+                    "konut": ["konut", "ev", "bina", "housing", "house", "construction"],
+                    "nufus": ["nüfus", "demografik", "population", "demographic"],
+                    "saglik": ["sağlık", "hastalık", "health", "medical"],
+                    "sanayi": ["sanayi", "imalat", "industry", "manufacturing"],
+                    "ticaret": ["banka", "finans", "ticaret", "banking", "finance", "trade"]
+                }
+                
+                # Find best matching category
+                best_category = None
+                best_score = 0
+                
+                for category_path, keywords in category_keywords.items():
+                    score = sum(1 for keyword in keywords if keyword in question_lower)
+                    if score > best_score:
+                        best_score = score
+                        best_category = category_path
+                
+                # Default to first category if no match found
+                if not best_category and all_data:
+                    best_category = all_data[0].get("kategori")
+                
+                # Find the selected category data
+                selected_category_data = None
+                for category_data in all_data:
+                    if category_data.get("kategori") == best_category:
+                        selected_category_data = category_data
+                        break
+                
+                if not selected_category_data:
+                    return json.dumps({
+                        "error": "Could not find matching category",
+                        "available_categories": [cat["category_path"] for cat in category_summaries]
+                    }, ensure_ascii=False, indent=2)
+                
+                # Select relevant files from the chosen category (limit to 5 files max)
+                all_files = selected_category_data.get("files", [])
+                selected_files = all_files[:5]  # Take first 5 files as a safe limit
+                
                 result = {
                     "user_question": user_question,
-                    "llm_prompt": llm_prompt,
+                    "selected_category": best_category,
+                    "category_name": selected_category_data.get("name"),
                     "selected_files": selected_files,
-                    "category_path": placeholder_category.get("kategori"),
-                    "category_name": placeholder_category.get("name"),
-                    "reasoning": "This is a placeholder response. Replace with actual LLM selection logic.",
-                    "confidence": "low",
-                    "coverage": "placeholder"
+                    "total_files_in_category": len(all_files),
+                    "reasoning": f"Selected category '{best_category}' based on keyword matching. Showing first {len(selected_files)} files.",
+                    "confidence": "medium" if best_score > 0 else "low",
+                    "keyword_matches": best_score,
+                    "llm_prompt_for_reference": llm_prompt
                 }
                 
                 return json.dumps(result, ensure_ascii=False, indent=2)
@@ -236,13 +295,14 @@ class PaymentMCPServer:
                     }, ensure_ascii=False, indent=2)
                 
                 selected_files = selected_data.get("selected_files", [])
-                kategori_path = selected_data.get("category_path")
+                kategori_path = selected_data.get("category_path") or selected_data.get("selected_category")
                 
                 if not selected_files or not kategori_path:
                     return json.dumps({
                         "error": "No files or category path selected for processing",
                         "data": {},
-                        "input_data": selected_data
+                        "input_data": selected_data,
+                        "note": "Expected 'selected_files' and either 'category_path' or 'selected_category' fields"
                     }, ensure_ascii=False, indent=2)
                 
                 processed_data = {}
