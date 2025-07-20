@@ -43,3 +43,124 @@
 2025-07-20 16:25:22 - Sunday - __main__ - INFO - Successfully processed: İstatistiksel_Tablolar_Eğitim_ve_İşgücü_Durumuna_Göre_Kurumsal_Olmayan_Nüfus.xls
 2025-07-20 16:25:22 - Sunday - __main__ - INFO - Successfully processed: İstatistiksel_Tablolar_Yeni_Eğitim_alanına_göre_mevcut_esas_iş_ve_son_iş_ile_mezun_olunan_bölümün_uyumu,_2024.xls
 2025-07-20 16:25:22 - Sunday - __main__ - INFO - Successfully processed: İstatistiksel_Tablolar_En_az_bir_okul_bitirip_eğitimde_olmayan_fertlerin,_tamamlananyarım_bırakılan_eğitimlerinden_sonra_üç_aydan_uzun_süreli_ilk_işindeki_mesleğe_göre_bitirdiği_eğitim_düzeyi.xls
+2025-07-20 16:47:32 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:47:32 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:47:32 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:47:32 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:47:32 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:47:32 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:47:32 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 16:47:32 - Sunday - __main__ - ERROR - public_key.pem not found. Please run dashboard.py to generate it.
+2025-07-20 16:47:32 - Sunday - __main__ - ERROR - Failed to initialize server: public_key.pem not found.
+2025-07-20 16:47:32 - Sunday - __main__ - ERROR - Failed to start server: public_key.pem not found.
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 16:51:39 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 16:53:27 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 16:56:45 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 16:58:15 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 16:59:28 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 16:59:38 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 17:01:05 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - SSE transport: setting up Persistent Bearer authentication.
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 17:01:18 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - SSE transport: setting up Simple Bearer authentication.
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 17:09:42 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 17:09:59 - Sunday - __main__ - ERROR - Token verification failed: Invalid header string: 'utf-8' codec can't decode byte 0x88 in position 6: invalid start byte
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - SSE transport: setting up Simple Bearer authentication.
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - Authentication provider loaded with public key.
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 17:10:26 - Sunday - __main__ - INFO - MCP server started successfully

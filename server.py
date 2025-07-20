@@ -6,22 +6,46 @@ import asyncio
 import logging
 import httpx
 import click
+import jwt
 from datetime import datetime
 from typing import List, Dict, Any, Optional
+from collections import namedtuple
 from mcp.server.fastmcp import FastMCP
 from utils.logging import setup_logger
 from fastmcp.server.auth import BearerAuthProvider
 from fastmcp.server.auth.providers.bearer import RSAKeyPair
 
-# Initialize TuikScraper
-script_dir = os.path.dirname(os.path.abspath(__file__))
+# --- Configuration ---
+PUBLIC_KEY_FILE = "public_key.pem"
+ISSUER_URL = "https://wagmi.tech/auth"
+AUDIENCE = "wagmi-tech-payment-link-mcp-server"
 
-# Try to initialize TuikScraper with different methods
-try:
-    tuik = TuikScraper(download_folder=script_dir)
-except TypeError:
-    # If download_folder parameter is not supported, try without it
-    tuik = TuikScraper()
+AuthInfo = namedtuple("AuthInfo", ["claims", "expires_at", "scopes", "client_id"])
+
+class SimpleBearerAuthProvider:
+    def __init__(self, public_key: bytes, issuer: str, audience: str):
+        self.public_key = public_key
+        self.issuer = issuer
+        self.audience = audience
+        self.logger = setup_logger(__name__)
+
+    async def verify_token(self, token: str) -> Dict[str, Any]:
+        """Verify the token's signature, expiry, and claims."""
+        try:
+            decoded_token = jwt.decode(
+                token,
+                self.public_key,
+                algorithms=["RS256"],
+                audience=self.audience,
+                issuer=self.issuer,
+            )
+            client_id = decoded_token.get("sub")
+            # The middleware expects an object with 'scopes', 'expires_at' and 'client_id' attributes.
+            return AuthInfo(claims=decoded_token, expires_at=decoded_token.get("exp"), scopes=[], client_id=client_id)
+        except jwt.PyJWTError as e:
+            self.logger.error(f"Token verification failed: {e}")
+            raise Exception("Invalid token")
+
 
 class ConfigurationError(Exception):
     """Configuration error exception"""
@@ -41,48 +65,35 @@ class PaymentMCPServer:
         try:
             self.logger.info(f"Initializing MCP server")
 
-            # Setup authentication if needed
-            self.logger.info(f"Transport: {self.transport}")
-            self.logger.info(f"Auth token: {self.auth_token}")
+            # Setup authentication
             auth_provider = None
-            issuer_url = None
-            if self.transport == 'sse' and self.auth_token:
-                self.logger.info("SSE transport with auth token, setting up Bearer authentication.")
-                
-                # We generate a key on the fly. The token will be valid for this server session.
-                key_pair = RSAKeyPair.generate()
-                
-                issuer_url = "https://wagmi.tech/auth"
-                
-                auth_provider = BearerAuthProvider(
-                    public_key=key_pair.public_key,
-                    issuer=issuer_url,
-                    audience="wagmi-tech-payment-link-mcp-server"
-                )
-                
-                # The provided auth_token is used as the subject of the JWT
-                token = key_pair.create_token(
-                    subject=self.auth_token,
-                    issuer=issuer_url,
-                    audience="wagmi-tech-payment-link-mcp-server",
-                    expires_in_seconds=31536000,
-                )
-                self.logger.info(f"--- Your Bearer Token for this session ---")
-                self.logger.info(f"Use this token in the 'Authorization' header: Bearer <token>")
-                self.logger.info(f"{token}")
-                self.logger.info(f"------------------------------------------")
+            if self.transport == 'sse':
+                self.logger.info("SSE transport: setting up Simple Bearer authentication.")
+                try:
+                    with open(PUBLIC_KEY_FILE, "rb") as f:
+                        public_key = f.read()
+                    
+                    auth_provider = SimpleBearerAuthProvider(
+                        public_key=public_key,
+                        issuer=ISSUER_URL,
+                        audience=AUDIENCE
+                    )
+                    self.logger.info("Authentication provider loaded with public key.")
+                except FileNotFoundError:
+                    self.logger.error(f"{PUBLIC_KEY_FILE} not found. Please run dashboard.py to generate it.")
+                    raise ConfigurationError(f"{PUBLIC_KEY_FILE} not found.")
 
             # Create MCP server
             auth_config = None
             if auth_provider:
                 resource_server_url = f"http://{self.host}:{self.port}"
                 auth_config = {
-                    "issuer_url": issuer_url,
+                    "issuer_url": ISSUER_URL,
                     "resource_server_url": resource_server_url,
                 }
 
             self.mcp = FastMCP(
-                name="TUIK Employment Statistics MCP Server",
+                name="TUIK Statistics MCP Server",
                 host=self.host,
                 port=self.port,
                 token_verifier=auth_provider,
@@ -336,7 +347,7 @@ class PaymentMCPServer:
 @click.option('--host', default='0.0.0.0', help='Server host (default: 0.0.0.0)')
 @click.option('--port', default=8060, help='Server port (default: 8060)')
 @click.option('--transport', envvar='TRANSPORT', default='sse', help='Transport type (default: stdio)')
-@click.option('--auth-token', envvar='AUTH_TOKEN', default="oktant", help='A string to identify the client, used to generate a bearer token for SSE transport.')
+@click.option('--auth-token', envvar='AUTH_TOKEN', help='Bearer token for SSE transport.')
 def main(host, port, transport, auth_token):
     """Start the TUIK Employment Statistics MCP server."""
     

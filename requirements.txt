@@ -1,11 +1,9 @@
 fastmcp
-gunicorn
-python-dotenv
-httpx
-click
 pandas
 openpyxl
 xlrd
-tuik_scraper
-pyjwt
+click
+httpx
+Flask
+PyJWT
 cryptography

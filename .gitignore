@@ -1,2 +1,6 @@
 .venv/
 __pycache__/
+
+public_key.pem
+tokens.json
+private_key.pem
