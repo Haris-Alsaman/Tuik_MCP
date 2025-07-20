@@ -1,0 +1,11 @@
+fastmcp
+gunicorn
+python-dotenv
+httpx
+click
+pandas
+openpyxl
+xlrd
+tuik_scraper
+pyjwt
+cryptography

@@ -1,0 +1,45 @@
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Transport: stdio
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Transport: stdio
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - Auth token: oktant
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 14:19:11 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 14:19:21 - Sunday - __main__ - ERROR - Failed to start server: unhandled errors in a TaskGroup (1 sub-exception)
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Auth token: oktant
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - SSE transport with auth token, setting up Bearer authentication.
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - --- Your Bearer Token for this session ---
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - Use this token in the 'Authorization' header: Bearer <token>
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3dhZ21pLnRlY2gvYXV0aCIsInN1YiI6Im9rdGFudCIsImlhdCI6MTc1MzAxMDM4MywiZXhwIjoxNzg0NTQ2MzgzLCJhdWQiOiJ3YWdtaS10ZWNoLXBheW1lbnQtbGluay1tY3Atc2VydmVyIn0.OSbZ_WVB-0SBdplXdGymMJKiill00MF7-SAe4sg7-Pu9ImOI80a1A8Fq1HcNdxsDPNVraQfxcnt1NGKv9XLaY4-7aqphypwF2z6UwLF2Q8ejH-BydQjLrtnlnr_Z5JJCYZJwiWBa4UU_kAUniEX9oRfZBZ0q9wj1tuYH2xIqAsphKe8F_cHEWJ92fTjebH1DV0DBMTCBYk7ZgytlMQGHHYY8MwrrjQddrS63dXYy8rhHJzchYaHIA37Y9G3fatlYYNDlnL0cB619OnmiMbiWdXdlwuOlhGTPIaQqf8dTiX09krzJUcHGFchV88gc3wuJ8OOEqwXgfpgDkNdBx6g6NA
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - ------------------------------------------
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 14:19:43 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Starting TUIK Employment Statistics MCP server
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Server will run on 0.0.0.0:8060
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Logger '__main__' initialized. Logs will be saved to: /Users/haris/Documents/pythont/logs/payment_mcp_2025-07-20_Sunday.log
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Initializing MCP server
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Transport: sse
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Auth token: oktant
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - SSE transport with auth token, setting up Bearer authentication.
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - --- Your Bearer Token for this session ---
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - Use this token in the 'Authorization' header: Bearer <token>
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJodHRwczovL3dhZ21pLnRlY2gvYXV0aCIsInN1YiI6Im9rdGFudCIsImlhdCI6MTc1MzAxNzU3MSwiZXhwIjoxNzg0NTUzNTcxLCJhdWQiOiJ3YWdtaS10ZWNoLXBheW1lbnQtbGluay1tY3Atc2VydmVyIn0.u0FohkMnUllN-yT7GyeusZ1-Fd59vk8B1YIpcSnXW_96ZREoSZpVGvCLOi06aAcvbA9Nxae-7PehqOGQABnQncLWD2PjfyqjDcYT1EsRIPTKPEL7AAwk6ShnCDW8Wq8DyVn_NhVDhwyFuXNrd1HA4M6UzNPYlRlVtFJf53WlULplnpvCKkuwthbt76KzOTz8Xg2beobqLpH43sQHuyPqw-wS1kgbeoR50QqecCKXlPb0oeQLRyUVt0F1UQwIz97KtWDa26NL_tsmnfX47PKMhX7EFQHRJKyPR3FmW4ceOmXnkfWVt4QtsvqHOx4ITPiUcXrra4tsbMKToLTxZDugGA
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - ------------------------------------------
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - MCP server initialized successfully
+2025-07-20 16:19:31 - Sunday - __main__ - INFO - MCP server started successfully
+2025-07-20 16:25:22 - Sunday - __main__ - INFO - Successfully processed: İstatistiksel_Tablolar_Temel_işgücü_göstergeleri.xls
+2025-07-20 16:25:22 - Sunday - __main__ - INFO - Successfully processed: İstatistiksel_Tablolar_Eğitim_ve_İşgücü_Durumuna_Göre_Kurumsal_Olmayan_Nüfus.xls
+2025-07-20 16:25:22 - Sunday - __main__ - INFO - Successfully processed: İstatistiksel_Tablolar_Yeni_Eğitim_alanına_göre_mevcut_esas_iş_ve_son_iş_ile_mezun_olunan_bölümün_uyumu,_2024.xls
+2025-07-20 16:25:22 - Sunday - __main__ - INFO - Successfully processed: İstatistiksel_Tablolar_En_az_bir_okul_bitirip_eğitimde_olmayan_fertlerin,_tamamlananyarım_bırakılan_eğitimlerinden_sonra_üç_aydan_uzun_süreli_ilk_işindeki_mesleğe_göre_bitirdiği_eğitim_düzeyi.xls
